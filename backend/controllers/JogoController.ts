@@ -3,7 +3,7 @@ import db from '../DataBase/connection'
 import {CategoriasModels} from '../models/CategoriasModels'
 
 interface Palavras  {
-    palavras: string[]
+    palavras: string[];
     categoria: string
 }
 
