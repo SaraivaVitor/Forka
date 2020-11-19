@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { Text, TextInput } from 'react-native';
 import { data } from '../../../backend';
 import { JogoController } from '../../../backend/controllers/JogoController';
 
+import { Container, Imagem } from './styles.js';
+
+let Forca = require( '../../assets/completo.png');
 
 
 export default function Home() {
@@ -26,16 +29,30 @@ export default function Home() {
         console.log(`Você obteve 1 Acerto! total: ${newAcerto}`)
         return setAcertos(newAcerto);
       }
+
+    }
       
+    if(erros === 1){
+      Forca = require('../../assets/umaPerna.png')
+    }else if(erros === 2){
+      Forca = require('../../assets/semPernas.png')
+    }else if(erros === 3){
+      Forca = require('../../assets/umBraço.png')
+    }else if(erros === 4){
+      Forca = require('../../assets/semBraços.png')
+    }else if(erros === 5){
+      Forca = require('../../assets/soCabeça.png')
+    }else if(erros === 6){
+      Forca = require('../../assets/forca.png')
     }
 
     console.log(Jogo.acertos)
     Contador();
   },[nome])
   return (
-    <View>
-      <TextInput onChange={e=>setNome(e.target.value) } />
-      <Text>Hello World!</Text>
-    </View>
+    <Container>
+      <Imagem src={Forca} />
+      <TextInput onChange={e=>setNome(e.target.value) } />  
+    </Container>
   );
 }
