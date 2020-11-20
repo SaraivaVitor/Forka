@@ -20,3 +20,9 @@ export const Container = styled.div`
 export const Imagem = styled.img`
     max-width: 260px;
 `
+export const Texto = styled.h3`
+    color: white;
+    font-size: 40px;
+    letter-spacing: 5px;
+`
+

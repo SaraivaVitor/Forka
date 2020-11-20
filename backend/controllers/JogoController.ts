@@ -11,8 +11,8 @@ export class JogoController{
         
     public palavras: string[]
     public categoria: string;
-    public caracteres: Array<String[]>
-    public campos: Array<String[]>
+    public caracteres: String[]
+    public campos: String[]
     public camposAntigos: String
     public errors: number
     public acertos: number
@@ -20,11 +20,13 @@ export class JogoController{
 
     constructor(palavra: Palavras){
 
-       this.caracteres = palavra.palavras.map(palavra=>{return(palavra.split(''))})
+        const random = Math.floor(Math.random() * palavra.palavras.length)
 
-       this.campos = this.caracteres.map((caracteres,index)=>{     
-        return caracteres.map(campos=>{return '_'})            
-       })   
+        this.caracteres = palavra.palavras[random].split('')
+ 
+        this.campos = this.caracteres.map((caracteres)=>{     
+         return '_'})            
+        
       
       this.camposAntigos =  JSON.stringify(this.campos)
       this.palavras = palavra.palavras
@@ -43,17 +45,13 @@ export class JogoController{
        
         this.caracteres.forEach((caracteres,indexInicial)=>{   
                     
-            this.caracteres[indexInicial].forEach((caracteres,index) =>{
                 
-                if (caracteres === Letra) {
-                    this.campos[indexInicial].splice(index,1,Letra)
-                } 
-
+            if (caracteres === Letra) {
+                this.campos.splice(indexInicial,1,Letra)
+            } 
                 this.totalPalavras = this.totalPalavras + 1
             })
                        
-        }) 
-
         if (JSON.stringify(this.campos) == this.camposAntigos) {
            
             this.camposAntigos = JSON.stringify(this.campos) 
@@ -64,26 +62,26 @@ export class JogoController{
             this.acertos = this.acertos + 1
         }
         
-        if (JSON.stringify(this.caracteres) == JSON.stringify(this.campos)){
-           return this.Win()
-           
-        } else if(this.errors > 5){
-
+        if (this.errors > 5) {
            return this.GameOver()
-        
+        } else if(JSON.stringify(this.caracteres) == JSON.stringify(this.campos)){
+           return this.Win()
         }else{
 
-            return {
-                campos: this.campos,
-                pontuacao:{
-                    acertos: this.acertos,
-                    erros: this.errors
-                }
-            }
 
+
+        return {
+            campos: this.campos,
+            pontuacao:{
+                acertos: this.acertos,
+                erros: this.errors
+            }
         }
     }
-    private GameOver(){
+
+        
+    }
+    public GameOver(){
         return {
             campos: this.campos,
             pontuacao:{
@@ -93,7 +91,7 @@ export class JogoController{
             }
         }
     }
-    private Win(){
+    public Win(){
         return {
             campos: this.campos,
             pontuacao:{
@@ -105,4 +103,3 @@ export class JogoController{
     }
 
 }
-

@@ -3,56 +3,74 @@ import { Text, TextInput } from 'react-native';
 import { data } from '../../../backend';
 import { JogoController } from '../../../backend/controllers/JogoController';
 
-import { Container, Imagem } from './styles.js';
+import { Container, Imagem, Texto } from './styles.js';
 
-let Forca = require( '../../assets/completo.png');
+let Forca = require( '../../assets/0.png');
 
 
 export default function Home() {
 
-  const [ nome, setNome ] = useState<string[]>(['']);
+  const [ palavra, setPalavra ] = useState<string>('');
   const [ erros, setErros ] = useState<number>(0);
   const [ acertos, setAcertos ] = useState<number>(0);
   let Jogo = new JogoController(data);
   // Jogo.campos | Campos retorna os traços para digitar
   // Jogo.categoria | Categoria retorna a categoria da jogada (Nome de paises)
-  useEffect(()=>{
-    async function Contador(){
-      let response = await Jogo.Chutar(nome)
-      
-      if(response.pontuacao.erros){
-        const newErro = erros+1;
-        console.log(`Você obteve 1 erro! total: ${newErro}`)
-        return setErros(newErro);
-      }else if(response.pontuacao.acertos){
-        const newAcerto = acertos+1;
-        console.log(`Você obteve 1 Acerto! total: ${newAcerto}`)
-        return setAcertos(newAcerto);
-      }
+  
+  function contas(prop:string){
+    let response = Jogo.Chutar(prop)
+    setPalavra("")
 
+    if(response.pontuacao.erros >= 1){
+      return setAcertos(response.pontuacao.erros);
     }
-      
-    if(erros === 1){
-      Forca = require('../../assets/umaPerna.png')
-    }else if(erros === 2){
-      Forca = require('../../assets/semPernas.png')
-    }else if(erros === 3){
-      Forca = require('../../assets/umBraço.png')
-    }else if(erros === 4){
-      Forca = require('../../assets/semBraços.png')
-    }else if(erros === 5){
-      Forca = require('../../assets/soCabeça.png')
-    }else if(erros === 6){
-      Forca = require('../../assets/forca.png')
-    }
+    
+  
+    console.log(response)
+    console.log(Jogo.caracteres)
+    console.log(Jogo.camposAntigos)
+    console.log(Jogo.campos)
+
+  }
+
+  useEffect(()=>{
+    
+    /**
+     * Condicionais que fazem com que cada vez que o usuario erre o boneco perca parte do corpo.
+     */
+
+      // if(Jogo.errors === 1){
+      //   Forca = require('../../assets/1.png')
+      // }
+      // if(Jogo.errors === 2){
+      //   Forca = require('../../assets/2.png')
+      // }
+      // if(Jogo.errors === 3){
+      //   Forca = require('../../assets/3.png')
+      // }
+      // if(Jogo.errors === 4){
+      //   Forca = require('../../assets/4.png')
+      // }
+      // if(Jogo.errors === 5){
+      //   Forca = require('../../assets/5.png')
+      // }
+      // if(Jogo.errors === 6){
+      //   Forca = require('../../assets/6.png')
+      // }
 
     console.log(Jogo.acertos)
-    Contador();
-  },[nome])
+    console.log(Jogo.campos)
+
+    console.log(acertos)
+  },[])
+
+   console.log(Jogo.errors)
   return (
     <Container>
       <Imagem src={Forca} />
-      <TextInput onChange={e=>setNome(e.target.value) } />  
+      <Texto>Categoria:{Jogo.categoria}</Texto>
+      <Texto>{Jogo.campos}</Texto>
+      <TextInput value={palavra} maxLength={1} onChange={(e) => contas(e.target.value) } />  
     </Container>
   );
 }
