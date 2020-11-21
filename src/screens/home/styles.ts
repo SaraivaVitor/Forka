@@ -11,9 +11,13 @@ export const Container = styled.div`
     align-items: center;
 
     input{
-        border: 2px solid white;
+        border-radius: 15px;
+        background-color: white;
         width: 70%;
+        height: 50px;
+        padding-left: 10px;
         margin-top: 50px;
+        margin-bottom: 50px;
     }    
 `
 
