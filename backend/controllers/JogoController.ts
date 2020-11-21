@@ -1,16 +1,6 @@
-import { count } from 'console';
-import db from '../DataBase/connection'
-import {CategoriasModels} from '../models/CategoriasModels'
-
-interface Palavras  {
-    palavras: string[];
-    categoria: string
-}
-
 export class JogoController{
-        
-    public palavras: string[]
-    public categoria: string;
+   
+ 
     public caracteres: String[]
     public campos: String[]
     public camposAntigos: String
@@ -18,19 +8,17 @@ export class JogoController{
     public acertos: number
     public totalPalavras: number
 
-    constructor(palavra: Palavras){
+    constructor(palavras: String){
 
-        const random = Math.floor(Math.random() * palavra.palavras.length)
-
-        this.caracteres = palavra.palavras[random].split('')
+        this.caracteres = palavras.split('')
  
         this.campos = this.caracteres.map((caracteres)=>{     
          return '_'})            
         
       
       this.camposAntigos =  JSON.stringify(this.campos)
-      this.palavras = palavra.palavras
-      this.categoria = palavra.categoria
+      
+     
       this.errors = 0
       this.acertos = 0 
       this.totalPalavras = 0
@@ -101,5 +89,5 @@ export class JogoController{
             }
         }
     }
-    
+
 }
