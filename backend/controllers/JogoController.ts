@@ -26,15 +26,16 @@ export class JogoController{
         
         this.camposAntigos = JSON.stringify(this.campos)
        
+        //Foreach responsavel por substituir as palavras por traços 
         this.caracteres.forEach((caracteres,indexInicial)=>{   
-                    
-                
+                            
             if (caracteres === Letra) {
                 this.campos.splice(indexInicial,1,Letra)
             } 
                 this.totalPalavras = this.totalPalavras + 1
-            })
-                       
+        })
+         
+        //Condicional que contabiliza os erros e acertos
         if (JSON.stringify(this.campos) == this.camposAntigos) {
            
             this.camposAntigos = JSON.stringify(this.campos) 
@@ -52,7 +53,7 @@ export class JogoController{
         }else{
 
 
-
+        
         return { //Retorno do objeto contendo a pontuação, e os campos para renderizar na tela
             campos: this.campos,
             pontuacao:{
