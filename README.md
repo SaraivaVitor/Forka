@@ -10,6 +10,7 @@ npm run android || react-native run-android <- para rodar no android
 App desenvolvido para disciplina de mobile do senai.
 
 **Linguagens**
+React Native
 Typescript
 Javascript
 Java
